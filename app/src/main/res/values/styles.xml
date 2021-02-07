@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="white_button" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/background</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="blue_button" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:textColor">@color/background</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+</resources>
