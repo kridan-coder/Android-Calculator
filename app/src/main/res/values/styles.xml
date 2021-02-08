@@ -2,21 +2,21 @@
 <resources>
     <style name="white_button" parent="Theme.AppCompat">
         <item name="android:textColor">@color/blue</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
         <item name="android:background">@drawable/white_button</item>
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
     <style name="blue_button" parent="Theme.AppCompat">
         <item name="android:textColor">@color/blue_button_text_color</item>
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:minHeight">0dp</item>
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:background">@drawable/blue_button</item>
         <item name="android:fontFamily">@font/montserrat</item>
