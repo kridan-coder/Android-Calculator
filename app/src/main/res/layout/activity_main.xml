@@ -55,7 +55,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/digital"
         android:letterSpacing="0.04"
-        android:text="777"
+        android:text="H ITS"
         android:textColor="@color/dark"
         android:textSize="64sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewBackground8"
