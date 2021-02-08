@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,9 +22,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button8: Button
     private lateinit var button9: Button*/
 
-    var oldValue = 0
-    var newValue = 0
-    var currValue = ""
+    var oldValue = "0"
+    var newValue = "0"
+    var currValue = "0"
+    var operation = "nothing"
+    var gotErr = false
 
     private lateinit var displayCurr: TextView
 
@@ -67,10 +70,79 @@ class MainActivity : AppCompatActivity() {
         buttonAC = findViewById(R.id.button_AC)
         buttonComma = findViewById(R.id.button_comma)
 
+        buttonAC.setOnClickListener {
+            allClear()
+        }
 
+        buttonEqual.setOnClickListener {
+            equalPressed()
+        }
+
+        buttonComma.setOnClickListener {
+            commaPressed()
+        }
+
+        buttonPlusMinus.setOnClickListener {
+            plusMinusPressed()
+        }
     }
 
-    fun digitPressed(view: View) {
+    private fun plusMinusPressed(){
+        if (displayCurr.text.toString() != "0")
+        {
+            displayCurr.text = (displayCurr.text.toString().toFloat() * -1).toString()
+        }
+    }
+
+    private fun isFloat(value:String): Boolean{
+        if (value.indexOf('.') != -1)
+        {
+            return true
+        }
+        return false
+    }
+
+    private fun commaPressed(){
+        if (!isFloat(displayCurr.text.toString())){
+            displayCurr.text = displayCurr.text.toString() + "."
+        }
+    }
+
+    private fun equalPressed(){
+        if (operation == "/" && displayCurr.text.toString() == "0"){
+            Toast.makeText(applicationContext, "А на ноль делить нельзя!", Toast.LENGTH_LONG).show()
+        }
+        else if (oldValue != "0")
+        {
+            when (operation) {
+                "/" -> {
+                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() / displayCurr.text.toString().toFloat()).toString()
+                }
+                "*" -> {
+                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() * displayCurr.text.toString().toFloat()).toString()
+                }
+                "+" -> {
+                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() + displayCurr.text.toString().toFloat()).toString()
+                }
+                "-" -> {
+                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() - displayCurr.text.toString().toFloat()).toString()
+                }
+                "%" -> {
+                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() % displayCurr.text.toString().toFloat()).toString()
+                }
+            }
+        }
+        oldValue = "0"
+    }
+
+    private fun allClear(){
+        displayCurr.text = "0"
+        oldValue="0"
+        currValue = "0"
+        operation="nothing"
+    }
+
+    fun digitButtonPressed(view: View) {
         when(view.id)
         {
             R.id.button_0 -> numPressed(0)
@@ -86,24 +158,90 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun numPressed(digit: Int){
-        if (displayCurr.text == "H ITS")
+        if (displayCurr.text == "H ITS" || displayCurr.text == "0")
         {
-            currValue = digit.toString()
+            displayCurr.text = digit.toString()
             if (digit == 1)
-                displayCurr.text = " $digit"
+                displayCurr.text = "$digit"
             else
                 displayCurr.text = digit.toString()
         }
-        else if (currValue.length <= 8)
+        else if (displayCurr.text.length <= 8)
         {
-            currValue = currValue.plus(digit.toString())
+            //displayCurr.text = displayCurr.text.toString().plus(digit.toString())
 
             if (digit == 1)
-                displayCurr.text = displayCurr.text.toString() + " ".plus(digit.toString())
+                displayCurr.text = displayCurr.text.toString() + "".plus(digit.toString())
             else
                 displayCurr.text = displayCurr.text.toString().plus(digit.toString())
         }
     }
+
+    fun operationButtonPressed(view: View) {
+        when(view.id)
+        {
+            R.id.button_plus -> operationPressed("+")
+            R.id.button_minus -> operationPressed("-")
+            R.id.button_multiply -> operationPressed("*")
+            R.id.button_divide -> operationPressed("/")
+            R.id.button_percent -> operationPressed("%")
+        }
+    }
+
+    private fun operationPressed(value: String)
+    {
+        val regex = """[%/*\-+]""".toRegex()
+        //val charArray = currValue.toCharArray()
+        if (regex.matches(oldValue.toCharArray()[oldValue.length - 1].toString()))
+        {
+            stashResult()
+            operation = value
+            if (!gotErr)
+                oldValue += operation;
+            else {
+                gotErr = false;
+            }
+
+        }
+        else
+        {
+            operation = value;
+            oldValue = displayCurr.text.toString() + operation;
+            displayCurr.text = "0";
+            currValue = "0"
+        }
+    }
+
+    private fun stashResult(){
+        if (operation == "/" && displayCurr.text.toString() == "0"){
+            Toast.makeText(applicationContext, "А на ноль делить нельзя!", Toast.LENGTH_LONG).show()
+        }
+        else
+        {
+            when (operation) {
+                "/" -> {
+                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() / displayCurr.text.toString().toFloat()).toString()
+                }
+                "*" -> {
+                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() * displayCurr.text.toString().toFloat()).toString()
+                }
+                "+" -> {
+                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() + displayCurr.text.toString().toFloat()).toString()
+                }
+                "-" -> {
+                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() - displayCurr.text.toString().toFloat()).toString()
+                }
+                "%" -> {
+                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() % displayCurr.text.toString().toFloat()).toString()
+                }
+            }
+            newValue = "0"
+            displayCurr.text = "0"
+        }
+    }
+
 
 }
