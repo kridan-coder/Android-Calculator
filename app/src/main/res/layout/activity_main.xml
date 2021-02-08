@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+-->
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="false"
+    android:windowTranslucentNavigation="false"
     tools:context=".MainActivity">
+
+
 
     <ImageView
         android:id="@+id/imageView2"
@@ -20,7 +32,7 @@
         app:srcCompat="@drawable/screen" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewBackground8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,6 +49,21 @@
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     <TextView
+        android:id="@+id/textViewDigits"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/digital"
+        android:letterSpacing="0.04"
+        android:text="777"
+        android:textColor="@color/dark"
+        android:textSize="64sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewBackground8"
+        app:layout_constraintEnd_toEndOf="@+id/textViewBackground8"
+        app:layout_constraintStart_toStartOf="@+id/textViewBackground8"
+        app:layout_constraintTop_toTopOf="@+id/textViewBackground8" />
+
+    <TextView
         android:id="@+id/textCalculator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,16 +71,18 @@
         android:fontFamily="@font/museo"
         android:text="Calculator"
         android:textColor="@color/dark"
-        android:textSize="30sp"
+        android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:foregroundGravity="fill"
         android:transitionGroup="false"
         app:layout_constrainedHeight="false"
         app:layout_constrainedWidth="false"
@@ -68,7 +97,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="0"
-            app:layout_constraintEnd_toStartOf="@+id/button_comma"
+            app:layout_constraintEnd_toEndOf="@+id/button_2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_1" />
 
@@ -240,12 +269,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.25" />
 </androidx.constraintlayout.widget.ConstraintLayout>
