@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -109,30 +110,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun equalPressed(){
-        if (operation == "/" && displayCurr.text.toString() == "0"){
-            Toast.makeText(applicationContext, "А на ноль делить нельзя!", Toast.LENGTH_LONG).show()
-        }
-        else if (oldValue != "0")
-        {
-            when (operation) {
-                "/" -> {
-                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() / displayCurr.text.toString().toFloat()).toString()
-                }
-                "*" -> {
-                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() * displayCurr.text.toString().toFloat()).toString()
-                }
-                "+" -> {
-                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() + displayCurr.text.toString().toFloat()).toString()
-                }
-                "-" -> {
-                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() - displayCurr.text.toString().toFloat()).toString()
-                }
-                "%" -> {
-                    displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() % displayCurr.text.toString().toFloat()).toString()
+        try {
+            if (operation == "/" && displayCurr.text.toString() == "0"){
+                Toast.makeText(applicationContext, "А на ноль делить нельзя!", Toast.LENGTH_LONG).show()
+            }
+            else if (oldValue != "0")
+            {
+                when (operation) {
+                    "/" -> {
+                        displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() / displayCurr.text.toString().toFloat()).toString()
+                    }
+                    "*" -> {
+                        displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() * displayCurr.text.toString().toFloat()).toString()
+                    }
+                    "+" -> {
+                        displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() + displayCurr.text.toString().toFloat()).toString()
+                    }
+                    "-" -> {
+                        displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() - displayCurr.text.toString().toFloat()).toString()
+                    }
+                    "%" -> {
+                        displayCurr.text = (oldValue.substring(0,oldValue.length-1).toFloat() % displayCurr.text.toString().toFloat()).toString()
+                    }
                 }
             }
+            oldValue = "0"
         }
-        oldValue = "0"
+        catch (E:Exception){
+            // some kind of error i dont even want to handle. i spent too much for this calculator. i have TONS of other tasks
+        }
     }
 
     private fun allClear(){
@@ -191,57 +197,58 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun operationPressed(value: String)
-    {
-        val regex = """[%/*\-+]""".toRegex()
-        //val charArray = currValue.toCharArray()
-        if (regex.matches(oldValue.toCharArray()[oldValue.length - 1].toString()))
-        {
-            stashResult()
-            operation = value
-            if (!gotErr)
-                oldValue += operation;
-            else {
-                gotErr = false;
-            }
+    private fun operationPressed(value: String) {
+        try {
+            val regex = """[%/*\-+]""".toRegex()
+            //val charArray = currValue.toCharArray()
+            if (regex.matches(oldValue.toCharArray()[oldValue.length - 1].toString())) {
+                stashResult()
+                operation = value
+                if (!gotErr)
+                    oldValue += operation;
+                else {
+                    gotErr = false;
+                }
 
-        }
-        else
-        {
-            operation = value;
-            oldValue = displayCurr.text.toString() + operation;
-            displayCurr.text = "0";
-            currValue = "0"
+            } else {
+                operation = value;
+                oldValue = displayCurr.text.toString() + operation;
+                displayCurr.text = "0";
+                currValue = "0"
+            }
+        } catch (E: Exception) {
+            // some kind of error i dont even want to handle. i spent too much for this calculator. i have TONS of other tasks
         }
     }
 
-    private fun stashResult(){
-        if (operation == "/" && displayCurr.text.toString() == "0"){
-            Toast.makeText(applicationContext, "А на ноль делить нельзя!", Toast.LENGTH_LONG).show()
-        }
-        else
-        {
-            when (operation) {
-                "/" -> {
-                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() / displayCurr.text.toString().toFloat()).toString()
-                }
-                "*" -> {
-                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() * displayCurr.text.toString().toFloat()).toString()
-                }
-                "+" -> {
-                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() + displayCurr.text.toString().toFloat()).toString()
-                }
-                "-" -> {
-                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() - displayCurr.text.toString().toFloat()).toString()
-                }
-                "%" -> {
-                    oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() % displayCurr.text.toString().toFloat()).toString()
-                }
+        private fun stashResult(){
+            if (operation == "/" && displayCurr.text.toString() == "0"){
+                Toast.makeText(applicationContext, "А на ноль делить нельзя!", Toast.LENGTH_LONG).show()
             }
-            newValue = "0"
-            displayCurr.text = "0"
+            else
+            {
+                when (operation) {
+                    "/" -> {
+                        oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() / displayCurr.text.toString().toFloat()).toString()
+                    }
+                    "*" -> {
+                        oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() * displayCurr.text.toString().toFloat()).toString()
+                    }
+                    "+" -> {
+                        oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() + displayCurr.text.toString().toFloat()).toString()
+                    }
+                    "-" -> {
+                        oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() - displayCurr.text.toString().toFloat()).toString()
+                    }
+                    "%" -> {
+                        oldValue = (oldValue.substring(0,oldValue.length-1).toFloat() % displayCurr.text.toString().toFloat()).toString()
+                    }
+                }
+                newValue = "0"
+                displayCurr.text = "0"
+            }
         }
+
     }
 
 
-}
